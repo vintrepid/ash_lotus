@@ -8,10 +8,20 @@ defmodule AshLotus.Consumer.ReleaseCheck do
   require Logger
 
   alias AshLotus.Consumer.Note
+  alias AshLotus.Consumer.Task
 
   @event "ash_lotus.consumer.release_check"
-  @required_applications [:ash, :journal_ash, :solid_ash, :cinder, :ash_lotus]
-  @required_modules [Ash, JournalAsh, SolidAsh, Cinder]
+  @required_applications [
+    :ash,
+    :korero,
+    :oban,
+    :cloak,
+    :journal_ash,
+    :solid_ash,
+    :cinder,
+    :ash_lotus
+  ]
+  @required_modules [Ash, Korero.Task, Oban, Cloak.Vault, JournalAsh, SolidAsh, Cinder]
 
   def run! do
     {:ok, _started} = Application.ensure_all_started(:ash_lotus_consumer)
@@ -19,6 +29,7 @@ defmodule AshLotus.Consumer.ReleaseCheck do
     assert_dependencies_loaded!()
     assert_dependencies_started!()
     assert_ash_round_trip!()
+    assert_korero_round_trip!()
     assert_journal_round_trip!()
 
     :ok
@@ -48,6 +59,21 @@ defmodule AshLotus.Consumer.ReleaseCheck do
 
     unless is_binary(note.id) and note.title == "synthetic release check" do
       raise "Ash embedded create action failed"
+    end
+  end
+
+  defp assert_korero_round_trip! do
+    completed =
+      %{title: "synthetic queue release check", priority: 3}
+      |> Task.create!()
+      |> Task.start!(%{})
+      |> Task.complete!(%{})
+
+    persisted = Task.by_id!(completed.id)
+
+    unless persisted.status == :completed and persisted.priority == nil and
+             match?(%DateTime{}, persisted.completed_at) do
+      raise "Korero lifecycle did not persist through the host Ash resource"
     end
   end
 

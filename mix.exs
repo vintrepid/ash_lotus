@@ -5,7 +5,7 @@
 defmodule AshLotus.MixProject do
   use Mix.Project
 
-  @version "0.1.0-alpha.1"
+  @version "0.1.0-alpha.2"
   @source_url "https://github.com/vintrepid/ash_lotus"
 
   def project do
@@ -40,13 +40,15 @@ defmodule AshLotus.MixProject do
        github: "vintrepid/ash_lotus_core",
        ref: "88c3fb4243de5c166ca1a71191bf10f5222813d1",
        override: true},
+      {:korero,
+       github: "vintrepid/korero", ref: "49594270b7637a24abc78d3a36ba6c8dc2a553dd", override: true},
       {:journal_ash,
        github: "vintrepid/journal_ash",
-       ref: "5b151a68dffc62e564bef11f5865b212ab80a339",
+       ref: "898f427b4bb7126fdc3d8d8ca212aefb24e170db",
        override: true},
       {:solid_ash,
        github: "vintrepid/solid_ash",
-       ref: "3569fe9027733cef44fac560081b78bb470758d5",
+       ref: "2b2c403d54d9bf09296d70f7d4ed9f2239f19582",
        override: true},
       {:cinder,
        github: "vintrepid/cinder", ref: "a48ad76ee217c47f0742778965334b168439c7b8", override: true},

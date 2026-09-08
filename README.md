@@ -21,7 +21,7 @@ defp deps do
   [
     {:ash_lotus,
      github: "vintrepid/ash_lotus",
-     tag: "v0.1.0-alpha.1"}
+     tag: "v0.1.0-alpha.2"}
   ]
 end
 ```
@@ -29,6 +29,8 @@ end
 The distribution supplies:
 
 - the upstream-tracking `ash_lotus_core` fork as OTP application `:ash`;
+- Kōrero for conversations and their work, with Oban-backed execution and an Ash task-queue lifecycle,
+  composed into host-owned resources without duplicating their business actions;
 - JournalAsh for centrally governed Logger observations and an explicit future
   boundary for transaction-linked committed facts;
 - the foundation-stage SolidAsh resources, authorization primitives, and
@@ -38,8 +40,13 @@ The distribution supplies:
   paper-trail, Oban, admin, authentication, JSON:API, SQL, and money integration
   versions selected for the Lotus stack, including its Ecto money adapter.
 
-Application code still calls `Ash`, `Logger`, `JournalAsh`, `SolidAsh`, and
+Application code still calls `Ash`, `Korero`, `Logger`, `JournalAsh`, `SolidAsh`, and
 `Cinder` directly. AshLotus is dependency policy, not a facade.
+
+Korero owns the Oban integration; JournalAsh owns Cloak-backed journal encryption.
+Their native `Oban` and `Cloak` APIs are also part of the supplied dependency
+contract. Hosts still configure their existing Oban instance and runtime vaults;
+adding a dependency does not itself start a job queue or encrypt existing logs.
 
 These are runtime dependencies. Starting `:ash_lotus` starts their OTP
 applications; in particular, JournalAsh installs its global Logger primary
@@ -53,13 +60,14 @@ for grouping.
 
 ## Why it is separate from the core fork
 
-JournalAsh, SolidAsh, and Cinder depend on `:ash`. If the `:ash` core project
+Korero, JournalAsh, SolidAsh, and Cinder depend on `:ash`. If the `:ash` core project
 also depended on those extensions, Mix would have a dependency cycle. The
 separate `:ash_lotus` application sits above both core and extensions:
 
 ```text
 application -> ash_lotus -> :ash
-                         -> journal_ash -> :ash
+                         -> korero      -> :ash + ash_state_machine + ash_oban + oban
+                         -> journal_ash -> :ash + cloak
                          -> solid_ash   -> :ash
                                         -> journal_ash
                                         -> ash_authentication -> :ash
@@ -72,7 +80,7 @@ application graph.
 
 ## Status
 
-`0.1.0-alpha.1` is an experimental Git distribution, not a production-readiness
+`0.1.0-alpha.2` is an experimental Git distribution, not a production-readiness
 claim for every included integration. All first-party Git dependencies are
 pinned to immutable commits for reproducibility, not as a promise of a stable
 interface. Pre-1.0 APIs and dependency choices may change between releases.
@@ -90,6 +98,7 @@ reporting policy.
 Run `sh scripts/check_consumer.sh` from this checkout. The standalone fixture
 declares only a path dependency on `ash_lotus`; it exercises a direct embedded
 Ash create action, a Logger-to-JournalAsh retained observation and health check,
+a Korero create/start/complete lifecycle through a host-owned Ash resource,
 and SolidAsh/Cinder module availability. It then assembles an OTP release and
 repeats those checks using the release executable.
 

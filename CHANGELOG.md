@@ -6,6 +6,15 @@ SPDX-License-Identifier: MIT
 
 # Changelog
 
+## 0.1.0-alpha.2 - 2026-09-08
+
+- Supply Korero, the conversation/workflow foundation with an Ash task lifecycle
+  and native Oban execution integration, through the curated dependency set.
+- Include JournalAsh's explicit Cloak-backed sealed-entry format; default log
+  output and the volatile plaintext memory store remain unchanged.
+- Verify a host-owned Korero task lifecycle in the standalone consumer and
+  assembled release, alongside existing Ash and Logger checks.
+
 ## 0.1.0-alpha.1 - 2026-09-07
 
 - Establish the acyclic AshLotus distribution contract.

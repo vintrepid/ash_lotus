@@ -7,7 +7,7 @@ SPDX-License-Identifier: MIT
 # AshLotus Agent Rules
 
 1. `ash_lotus` is the thin, public distribution above the upstream-tracking
-   `ash_lotus_core` fork. It must not copy Ash, JournalAsh, SolidAsh, or Cinder
+   `ash_lotus_core` fork. It must not copy Ash, Korero, JournalAsh, SolidAsh, or Cinder
    application code.
 2. Names express the primary abstraction first: Ash is primary in `ash_lotus`;
    Solid and Journal are primary in `solid_ash` and `journal_ash`. Do not rename
@@ -31,3 +31,7 @@ SPDX-License-Identifier: MIT
    synthetic.
 9. Prefer model, dependency-graph, installer, and release tests. Browser tests
    do not belong in this package.
+10. `korero` owns the reusable conversation/workflow and task-queue contract. Hosts
+    keep their data layer, domain authorization, business actions, and UI
+    adapters. Message receipt, queue lifecycle, and attached-resource state
+    transitions remain distinct; a dependency bundle must not blur ownership.
