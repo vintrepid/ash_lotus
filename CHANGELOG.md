@@ -14,6 +14,9 @@ SPDX-License-Identifier: MIT
   output and the volatile plaintext memory store remain unchanged.
 - Verify a host-owned Korero task lifecycle in the standalone consumer and
   assembled release, alongside existing Ash and Logger checks.
+- Document the one top-level Ash override required with independent Hex-Ash
+  peers, and exercise that real dependency graph through a synthetic peer's
+  native action in the consumer test and assembled release.
 
 ## 0.1.0-alpha.1 - 2026-09-07
 

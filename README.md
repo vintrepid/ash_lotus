@@ -26,6 +26,29 @@ defp deps do
 end
 ```
 
+### Independent dependencies that also require Ash
+
+The one-dependency example works for a minimal host. If another direct host
+dependency declares Hex `:ash`, its declaration is a sibling of AshLotus's Git
+core declaration. Mix applies overrides only from an upper dependency level,
+not between siblings; moving AshLotus earlier in the list does not fix that
+conflict. Such hosts need one explicit top-level exception alongside AshLotus:
+
+```elixir
+{:ash,
+ github: "vintrepid/ash_lotus_core",
+ ref: "88c3fb4243de5c166ca1a71191bf10f5222813d1",
+ override: true}
+```
+
+Keep this override aligned with the core pin in the installed AshLotus release.
+AshLotus still governs that pin and all other curated versions; the host does
+not maintain an independent dependency selection. This is a Mix graph constraint,
+not a second application API. See Mix's [dependency options](https://hexdocs.pm/mix/Mix.Tasks.Deps.html#module-dependency-definition-options)
+and [convergence implementation](https://github.com/elixir-lang/elixir/blob/v1.20.3/lib/mix/lib/mix/dep/converger.ex#L235-L269).
+
+## Curated libraries
+
 The distribution supplies:
 
 - the upstream-tracking `ash_lotus_core` fork as OTP application `:ash`;
@@ -96,11 +119,14 @@ reporting policy.
 ## Consumer compatibility check
 
 Run `sh scripts/check_consumer.sh` from this checkout. The standalone fixture
-declares only a path dependency on `ash_lotus`; it exercises a direct embedded
-Ash create action, a Logger-to-JournalAsh retained observation and health check,
-a Korero create/start/complete lifecycle through a host-owned Ash resource,
+declares a path dependency on `ash_lotus`, a synthetic independent library with
+a normal Hex Ash requirement, and the aligned top-level Ash override described
+above. It resolves that real dependency graph and exercises native embedded Ash
+create actions through both the host and its peer, a Logger-to-JournalAsh retained
+observation and health check, a host-owned Korero create/start/complete lifecycle,
 and SolidAsh/Cinder module availability. It then assembles an OTP release and
-repeats those checks using the release executable.
+repeats those checks using the release executable. Removing the necessary
+override makes this peer graph fail dependency resolution.
 
 Hosts must set Ash's string-counting policy and register SolidAsh's bundled
 domain in their own configuration:

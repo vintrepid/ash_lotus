@@ -5,7 +5,7 @@
 defmodule AshLotus.Consumer.ReleaseCheckTest do
   use ExUnit.Case
 
-  test "one dependency supplies a working Ash model and journal runtime" do
+  test "the curated graph and an independent Ash peer work in the host runtime" do
     assert :ok = AshLotus.Consumer.ReleaseCheck.run!()
   end
 end

@@ -21,8 +21,13 @@ SPDX-License-Identifier: MIT
    release. Moving branches are allowed only while a dependency has no commit.
    Do not claim Hex publishability while production Git dependencies remain.
 6. A consumer declaring only `ash_lotus` must be able to compile code using
-   the distributed libraries and assemble an OTP release. Keep an integration
-   fixture that proves this contract.
+   the distributed libraries and assemble an OTP release. A host with an
+   independent direct dependency that requires Hex Ash needs one top-level
+   `:ash` Git override aligned with this distribution's core pin: Mix overrides
+   do not cross sibling dependency branches, and dependency ordering is not a
+   fix. Keep the synthetic peer consumer proving graph resolution, native Ash
+   actions, and release execution; update its explicit override with the core
+   pin. Do not hide this exception through dependency-loading bootstrap code.
 7. Keep this project policy-only. App-specific configuration, resources,
    migrations, and business workflows belong in the host application; reusable
    installers belong with the library that owns them.

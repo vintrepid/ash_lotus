@@ -29,6 +29,7 @@ defmodule AshLotus.Consumer.ReleaseCheck do
     assert_dependencies_loaded!()
     assert_dependencies_started!()
     assert_ash_round_trip!()
+    assert_peer_round_trip!()
     assert_korero_round_trip!()
     assert_journal_round_trip!()
 
@@ -74,6 +75,14 @@ defmodule AshLotus.Consumer.ReleaseCheck do
     unless persisted.status == :completed and persisted.priority == nil and
              match?(%DateTime{}, persisted.completed_at) do
       raise "Korero lifecycle did not persist through the host Ash resource"
+    end
+  end
+
+  defp assert_peer_round_trip! do
+    note = AshLotus.TestPeer.create!(Note, %{title: "synthetic peer release check"})
+
+    unless is_binary(note.id) and note.title == "synthetic peer release check" do
+      raise "independent Ash peer create action failed"
     end
   end
 
