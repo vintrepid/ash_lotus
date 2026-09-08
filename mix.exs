@@ -22,7 +22,48 @@ defmodule AshLotus.MixProject do
       description: "The curated Ash distribution for Lotus applications",
       package: package(),
       docs: docs(),
-      source_url: @source_url
+      source_url: @source_url,
+      maestro: [
+        owned_branch: "main",
+        owned_forks: [
+          ash: [
+            branch: "main",
+            repository: "https://github.com/vintrepid/ash_lotus_core.git",
+            update: :manual,
+            upstream_branch: "main",
+            upstream_url: "https://github.com/ash-project/ash.git"
+          ],
+          ash_authentication: [
+            branch: "security/magic-link-hardening-v4",
+            repository: "https://github.com/vintrepid/ash_authentication.git",
+            update: :manual,
+            upstream_branch: "stable-4.0",
+            upstream_url: "https://github.com/team-alembic/ash_authentication.git"
+          ],
+          cinder: [
+            branch: "calvin-additive-sort-append",
+            repository: "https://github.com/vintrepid/cinder.git",
+            update: :manual,
+            upstream_branch: "main",
+            upstream_url: "https://github.com/sevenseacat/cinder.git"
+          ],
+          journal_ash: [
+            branch: "main",
+            repository: "https://github.com/vintrepid/journal_ash.git",
+            update: :manual
+          ],
+          korero: [
+            branch: "main",
+            repository: "https://github.com/vintrepid/korero.git",
+            update: :manual
+          ],
+          solid_ash: [
+            branch: "master",
+            repository: "https://github.com/vintrepid/solid_ash.git",
+            update: :manual
+          ]
+        ]
+      ]
     ]
   end
 
@@ -51,28 +92,28 @@ defmodule AshLotus.MixProject do
        ref: "2b2c403d54d9bf09296d70f7d4ed9f2239f19582",
        override: true},
       {:cinder,
-       github: "vintrepid/cinder", ref: "a48ad76ee217c47f0742778965334b168439c7b8", override: true},
+       github: "vintrepid/cinder", ref: "30d879f0ae50967c2d8703fdd194303c4a941883", override: true},
       {:ash_authentication,
        git: "https://github.com/vintrepid/ash_authentication.git",
        ref: "f39c0add31582ba158b3097ad4998827ab3bc1b1",
        override: true},
-      {:ash_postgres, "== 2.13.0"},
-      {:ash_cloak, "== 0.4.0"},
-      {:ash_phoenix, "== 2.3.25"},
-      {:ash_ai, "== 1.0.0"},
-      {:ash_paper_trail, "== 0.7.0"},
-      {:ash_state_machine, "== 0.2.13"},
-      {:ash_archival, "== 2.0.3"},
-      {:ash_money, "== 0.2.6"},
-      {:ash_oban, "== 0.8.14"},
-      {:ash_admin, "== 1.3.1"},
-      {:ash_authentication_phoenix, "== 2.17.3"},
-      {:ash_json_api, "== 1.7.1"},
-      {:ash_sql, "== 0.7.1"},
-      {:ex_money_sql, "== 2.1.0"},
+      {:ash_postgres, "~> 2.13"},
+      {:ash_cloak, "~> 0.4.0"},
+      {:ash_phoenix, "~> 2.3 and >= 2.3.25"},
+      {:ash_ai, "~> 1.0"},
+      {:ash_paper_trail, "~> 0.7.0"},
+      {:ash_state_machine, "~> 0.2.13"},
+      {:ash_archival, "~> 2.0 and >= 2.0.3"},
+      {:ash_money, "~> 0.2.6"},
+      {:ash_oban, "~> 0.8.14"},
+      {:ash_admin, "~> 1.3 and >= 1.3.1"},
+      {:ash_authentication_phoenix, "~> 2.17 and >= 2.17.3"},
+      {:ash_json_api, "~> 1.7 and >= 1.7.1"},
+      {:ash_sql, "~> 0.7.1"},
+      {:ex_money_sql, "~> 2.1"},
       # Decimal 3.0.0 fixes this advisory; the feed still marks every version affected.
       {:decimal, ">= 3.0.0 and < 4.0.0"},
-      {:ex_doc, "~> 0.38", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.40.4", only: :dev, runtime: false}
     ]
   end
 
