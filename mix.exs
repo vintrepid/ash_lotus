@@ -82,7 +82,7 @@ defmodule AshLotus.MixProject do
        ref: "fc4185358a25b3e84b10eceb4f98666532701116",
        override: true},
       {:korero,
-       github: "vintrepid/korero", ref: "259676c186eb3feb1998ccd4174a5df86d33ddfb", override: true},
+       github: "vintrepid/korero", ref: "0d558b07824b1777e0e52e66e34f874beda747bb", override: true},
       {:journal_ash,
        github: "vintrepid/journal_ash",
        ref: "898f427b4bb7126fdc3d8d8ca212aefb24e170db",
