@@ -12,9 +12,19 @@ set of dependency and compatibility decisions. It gives a host application one
 dependency contract while preserving the native APIs and independent ownership
 of every library in the stack.
 
-The distribution pins the first-party forks by immutable commit and the
-governed Ash integrations by exact tested version. Updating those pins is a
-compatibility release, not an incidental dependency resolution.
+The distribution pins first-party forks by immutable commit. Governed Hex
+integrations declare the tested minimum in `mix.exs`, allowing later compatible
+versions; `mix.lock` records the exact tested resolution. Stable packages allow
+minor and patch updates within their major version. Pre-1.0 packages allow patch
+updates within their minor version. Dependency updates must leave the new
+minimums visible in the diff, not only replace the lockfile.
+
+Fork policies in `mix.exs` identify each owned branch and its upstream branch.
+Update tooling must compare both: being current with our fork does not mean the
+fork has incorporated upstream changes. Authentication deliberately tracks
+upstream `stable-4.0`, not the next major prerelease on `main`. Git revisions are
+advanced only to explicitly reviewed commits; discovery never merges or pushes
+forks automatically.
 
 ```elixir
 defp deps do
@@ -59,7 +69,7 @@ The distribution supplies:
 - the foundation-stage SolidAsh resources, authorization primitives, and
   encrypted-at-rest pod payload support;
 - the maintained Cinder fork for Ash-aware LiveView tables;
-- the exact AshPostgres, AshCloak, AshPhoenix, AI, state-machine, archival,
+- the compatible AshPostgres, AshCloak, AshPhoenix, AI, state-machine, archival,
   paper-trail, Oban, admin, authentication, JSON:API, SQL, and money integration
   versions selected for the Lotus stack, including its Ecto money adapter.
 

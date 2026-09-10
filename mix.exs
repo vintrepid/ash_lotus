@@ -18,7 +18,6 @@ defmodule AshLotus.MixProject do
       test_ignore_filters: [~r{^test/fixtures/}],
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      hex: [ignore_advisories: ["EEF-CVE-2026-32686"]],
       description: "The curated Ash distribution for Lotus applications",
       package: package(),
       docs: docs(),
@@ -82,7 +81,7 @@ defmodule AshLotus.MixProject do
        ref: "fc4185358a25b3e84b10eceb4f98666532701116",
        override: true},
       {:korero,
-       github: "vintrepid/korero", ref: "49594270b7637a24abc78d3a36ba6c8dc2a553dd", override: true},
+       github: "vintrepid/korero", ref: "33ac3dc", override: true},
       {:journal_ash,
        github: "vintrepid/journal_ash",
        ref: "898f427b4bb7126fdc3d8d8ca212aefb24e170db",
@@ -92,10 +91,10 @@ defmodule AshLotus.MixProject do
        ref: "2b2c403d54d9bf09296d70f7d4ed9f2239f19582",
        override: true},
       {:cinder,
-       github: "vintrepid/cinder", ref: "82a382896322dd8298cfd1299348d2e621e81f80", override: true},
+       github: "vintrepid/cinder", ref: "9d1140c", override: true},
       {:ash_authentication,
        git: "https://github.com/vintrepid/ash_authentication.git",
-       ref: "f39c0add31582ba158b3097ad4998827ab3bc1b1",
+       ref: "42d1af7",
        override: true},
       {:ash_postgres, "~> 2.13 and >= 2.13.1"},
       {:ash_cloak, "~> 0.4.0"},
@@ -110,9 +109,8 @@ defmodule AshLotus.MixProject do
       {:ash_authentication_phoenix, "~> 2.17 and >= 2.17.3"},
       {:ash_json_api, "~> 1.7 and >= 1.7.1"},
       {:ash_sql, "~> 0.7.3"},
-      {:ex_money_sql, "~> 2.1"},
-      # Decimal 3.0.0 fixes this advisory; the feed still marks every version affected.
-      {:decimal, ">= 3.0.0 and < 4.0.0"},
+      {:ex_money_sql, "~> 2.1 and >= 2.1.0"},
+      {:decimal, "~> 3.1 and >= 3.1.1"},
       {:ex_doc, "~> 0.40.4", only: :dev, runtime: false}
     ]
   end

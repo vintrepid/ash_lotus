@@ -40,3 +40,13 @@ SPDX-License-Identifier: MIT
     keep their data layer, domain authorization, business actions, and UI
     adapters. Message receipt, queue lifecycle, and attached-resource state
     transitions remain distinct; a dependency bundle must not blur ownership.
+11. Keep tested Hex minimums visible in `mix.exs` when updating dependencies:
+    stable packages use `~> major.minor and >= major.minor.patch`; pre-1.0 packages
+    use `~> 0.minor.patch`. The lockfile records exact tested versions. Do not
+    replace an intentionally different compatibility range without review.
+12. Declare owned Git repositories and tracking branches in
+    `maestro: [owned_forks: ...]` without machine-specific paths. Compare the
+    installed pin with the owned branch and that branch with its declared
+    upstream; neither comparison substitutes for the other. Advance refs only
+    after reviewing and validating the selected commit. Never blindly switch
+    an owned fork to its upstream default branch or force-push its history.
