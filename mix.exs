@@ -60,6 +60,11 @@ defmodule AshLotus.MixProject do
             branch: "master",
             repository: "https://github.com/vintrepid/solid_ash.git",
             update: :manual
+          ],
+          tag_ash: [
+            branch: "main",
+            repository: "https://github.com/vintrepid/tag_ash.git",
+            update: :manual
           ]
         ]
       ]
@@ -88,6 +93,10 @@ defmodule AshLotus.MixProject do
       {:solid_ash,
        github: "vintrepid/solid_ash",
        ref: "2b2c403d54d9bf09296d70f7d4ed9f2239f19582",
+       override: true},
+      {:tag_ash,
+       github: "vintrepid/tag_ash",
+       ref: "a525fc456e4b0828f08fc61c956c439378ccc2aa",
        override: true},
       {:cinder, github: "vintrepid/cinder", ref: "9d1140c", override: true},
       {:ash_authentication,

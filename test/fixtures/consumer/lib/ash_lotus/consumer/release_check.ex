@@ -18,16 +18,28 @@ defmodule AshLotus.Consumer.ReleaseCheck do
     :cloak,
     :journal_ash,
     :solid_ash,
+    :tag_ash,
     :cinder,
     :ash_lotus
   ]
-  @required_modules [Ash, Korero.Task, Oban, Cloak.Vault, JournalAsh, SolidAsh, Cinder]
+  @required_modules [
+    Ash,
+    TagAsh.Domain,
+    TagAsh.SubjectRef,
+    Korero.Task,
+    Oban,
+    Cloak.Vault,
+    JournalAsh,
+    SolidAsh,
+    Cinder
+  ]
 
   def run! do
     {:ok, _started} = Application.ensure_all_started(:ash_lotus_consumer)
 
     assert_dependencies_loaded!()
     assert_dependencies_started!()
+    assert_tag_reference_round_trip!()
     assert_ash_round_trip!()
     assert_peer_round_trip!()
     assert_korero_round_trip!()
@@ -50,6 +62,15 @@ defmodule AshLotus.Consumer.ReleaseCheck do
         raise "curated application did not start: #{inspect(application)}"
       end
     end)
+  end
+
+  defp assert_tag_reference_round_trip! do
+    reference = TagAsh.SubjectRef.build(:note, "synthetic-release-check")
+
+    unless TagAsh.SubjectRef.parse(reference) ==
+             {:ok, {"note", "synthetic-release-check"}} do
+      raise "TagAsh subject reference did not round-trip"
+    end
   end
 
   defp assert_ash_round_trip! do

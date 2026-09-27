@@ -68,13 +68,15 @@ The distribution supplies:
   boundary for transaction-linked committed facts;
 - the foundation-stage SolidAsh resources, authorization primitives, and
   encrypted-at-rest pod payload support;
+- TagAsh for host-repository tag vocabularies, hierarchical tags, and stable
+  assignments to host-owned subjects, while applications retain routing policy;
 - the maintained Cinder fork for Ash-aware LiveView tables;
 - the compatible AshPostgres, AshCloak, AshPhoenix, AI, state-machine, archival,
   paper-trail, Oban, admin, authentication, JSON:API, SQL, and money integration
   versions selected for the Lotus stack, including its Ecto money adapter.
 
-Application code still calls `Ash`, `Korero`, `Logger`, `JournalAsh`, `SolidAsh`, and
-`Cinder` directly. AshLotus is dependency policy, not a facade.
+Application code still calls `Ash`, `TagAsh`, `Korero`, `Logger`, `JournalAsh`,
+`SolidAsh`, and `Cinder` directly. AshLotus is dependency policy, not a facade.
 
 Korero owns the Oban integration; JournalAsh owns Cloak-backed journal encryption.
 Their native `Oban` and `Cloak` APIs are also part of the supplied dependency
@@ -99,6 +101,7 @@ separate `:ash_lotus` application sits above both core and extensions:
 
 ```text
 application -> ash_lotus -> :ash
+                         -> tag_ash     -> :ash + ash_postgres
                          -> korero      -> :ash + ash_state_machine + ash_oban + oban
                          -> journal_ash -> :ash + cloak
                          -> solid_ash   -> :ash
@@ -144,6 +147,7 @@ domain in their own configuration:
 ```elixir
 config :ash, default_string_length_count: :codepoints
 config :solid_ash, ash_domains: [SolidAsh.Domain]
+config :tag_ash, ash_domains: [TagAsh.Domain], repo: MyApp.Repo
 ```
 
 The fixture uses JournalAsh's bounded, volatile memory store and requires no

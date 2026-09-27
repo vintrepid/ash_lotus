@@ -5,4 +5,5 @@ import Config
 
 config :ash, default_string_length_count: :codepoints
 config :solid_ash, ash_domains: [SolidAsh.Domain]
+config :tag_ash, ash_domains: [TagAsh.Domain]
 config :ex_money, auto_start_exchange_rate_service: false
