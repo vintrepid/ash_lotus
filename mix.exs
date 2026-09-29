@@ -40,7 +40,7 @@ defmodule AshLotus.MixProject do
             upstream_url: "https://github.com/team-alembic/ash_authentication.git"
           ],
           cinder: [
-            branch: "calvin-additive-sort-append",
+            branch: "main",
             repository: "https://github.com/vintrepid/cinder.git",
             update: :manual,
             upstream_branch: "main",
