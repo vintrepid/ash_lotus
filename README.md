@@ -60,6 +60,14 @@ upstream `stable-4.0`, not the next major prerelease on `main`. Git revisions ar
 advanced only to explicitly reviewed commits; discovery never merges or pushes
 forks automatically.
 
+The coordinated Korero installer candidate remains review-only: compatibility
+checks and the unwaived security blockers are recorded separately in
+[candidate verification](verification/korero_install_candidate.json). This
+branch has not advanced its installed dependency refs. Passing installer and
+release checks does not mean the security gate or production adoption has passed.
+Hosts also supply a SAT solver for Ash policies, such as `picosat_elixir` or
+`simple_sat`; installation does not choose a policy solver for the application.
+
 ```elixir
 defp deps do
   [

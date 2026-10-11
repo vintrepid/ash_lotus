@@ -6,15 +6,18 @@
   "owner": "Codex / bundle_installer",
   "objective": "Compose the curated dependencies' own installers through ash_lotus.install, including Korero, without copying library or host code.",
   "handoff": "Verify and push for review; no deployment authorized.",
-  "status": "verified_infrastructure_pending_dependency",
-  "dependency": "Await published Korero extraction/installer SHA before updating its immutable pin and checking the bundle-to-Korero consumer contract. The current pin has no installer; default installation therefore intentionally fails preflight rather than claiming success. Calvin copies are retained by the extraction owner.",
+  "status": "blocked_security_gate",
+  "dependency": "Korero extraction and native installer are published at 06b93da81bd9e4e1b2c5016559299f5a89459bd2; patched Ash core is published at 070f3e382070699b48f7e823ba004022a7b69d2b. Coordinated compatibility is tested only in an isolated synthetic candidate. Actual immutable refs remain unchanged pending the unwaived Cloak advisory and separately verified owning authentication fork JTI blocker. The installed old Korero pin has no native installer, so default installation intentionally fails preflight rather than claiming success. Calvin copies remain unchanged.",
   "verification": [
     "mix precommit passed: library formatting and warning-free compilation, 12 tests of actual Ash/AshPostgres/AshAi native composition, dependency accounting, option passthrough including namespaced flags, duplicate composition, idempotency across applied runs, and rejection of database setup.",
     "Standalone peer consumer test passed; prod OTP release assembled and native Ash/Korero lifecycle plus logging smoke check passed. Optional Igniter does not enter the runtime-only consumer dependency graph.",
     "mix help ash_lotus.install and git diff --check passed. One persistent checkout; no worktree exceptions.",
-    "Existing Hex dependency security advisories were reported during unchanged consumer deps resolution. No unrelated dependency upgrades were performed; this is not a passing security audit."
+    "Existing Hex dependency security advisories were reported during unchanged consumer deps resolution. No unrelated dependency upgrades were performed; this is not a passing security audit.",
+    "Durable candidate compatibility evidence and the explicit FAILED_NOT_WAIVED security gate are recorded in verification/korero_install_candidate.json. Minimal candidate Hex floors are Decimal 3.1.2, Spark 2.7.6, AuthPhoenix 2.17.4 and Mint 1.10.2; other tested versions remain unchanged.",
+    "Hosted CI has not run on the review branch: configured workflows trigger main pushes and pull requests only, and no pull request is authorized. Recorded checks are owning local checks."
   ],
+  "verification_evidence": "verification/korero_install_candidate.json",
   "branch_diff": "https://github.com/vintrepid/ash_lotus/compare/main...feature/ash-lotus/dependency-install",
-  "deployment_status": "Not merged or deployed. Infrastructure is ready for review; complete Korero installation remains pending the coordinated library pin.",
+  "deployment_status": "Not merged or deployed. Infrastructure is review-ready, but coordinated adoption and immutable pin publication are BLOCKED by security policy. No cipher/data migration, owning authentication fork patch or audit exemption has been authorized.",
   "checkout_exception": null
 }
