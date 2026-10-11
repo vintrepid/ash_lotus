@@ -19,6 +19,40 @@ defmodule AshLotus.SecurityTest do
     assert {:error, _} = Security.validate_vault_inventory(cloak_vaults: [])
   end
 
+  test "explicit native app:false asset dependencies need no OTP metadata" do
+    asset = %Mix.Dep{
+      app: :synthetic_missing_asset_application,
+      opts: [app: false, compile: false]
+    }
+
+    assert {:ok, %{}} = Security.load_application_metadata([asset], :ash_lotus)
+    assert Application.spec(asset.app) == nil
+  end
+
+  test "missing real application metadata cannot be hidden by compile:false" do
+    for options <- [[], [compile: false], [app: true, compile: false]] do
+      real_app = %Mix.Dep{app: :synthetic_missing_real_application, opts: options}
+
+      assert {:error, "Required application metadata could not be safely loaded"} =
+               Security.load_application_metadata([real_app], :ash_lotus)
+    end
+
+    assert {:error, _} =
+             Security.load_application_metadata([], :synthetic_missing_root_application)
+  end
+
+  test "native metadata loading does not start application callbacks" do
+    running_before = Application.started_applications()
+    dependency = %Mix.Dep{app: :ash_lotus, opts: []}
+
+    assert {:ok, %{ash_lotus: _version}} =
+             Security.load_application_metadata([dependency], :ash_lotus)
+
+    assert Application.started_applications() == running_before
+    assert {:error, _} = Security.load_application_metadata([%{}], :ash_lotus)
+    assert {:error, _} = Security.load_application_metadata([], nil)
+  end
+
   test "an explicitly complete empty inventory proves only no configured vault" do
     assert :ok = Security.validate_vault_inventory(policy())
   end

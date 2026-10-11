@@ -21,6 +21,34 @@ defmodule AshLotus.Security do
     mint: "1.10.2"
   ]
 
+  @doc """
+  Loads resolved OTP application metadata without starting applications.
+
+  Native Mix dependencies explicitly declaring `app: false` are assets, not
+  OTP applications. Only that explicit option excludes a dependency; a
+  `compile: false` option or a missing `.app` file never hides a real app.
+  The owning root application is always loaded and checked. Dependency status
+  is deliberately not trusted because Mix's cached status may be stale.
+  """
+  def load_application_metadata(dependencies, root_application) when is_list(dependencies) do
+    with true <- valid_application?(root_application),
+         true <- Enum.all?(dependencies, &valid_native_dependency?/1),
+         applications =
+           dependencies
+           |> Enum.reject(&(Keyword.get(&1.opts, :app) == false))
+           |> Enum.map(& &1.app),
+         :ok <- load_metadata_apps(Enum.uniq(applications ++ [root_application])) do
+      {:ok, Map.new(applications, &{&1, Application.spec(&1, :vsn)})}
+    else
+      _ -> {:error, "Required application metadata could not be safely loaded"}
+    end
+  rescue
+    _ -> {:error, "Required application metadata could not be safely loaded"}
+  end
+
+  def load_application_metadata(_, _),
+    do: {:error, "Required application metadata could not be safely loaded"}
+
   @doc "Validate explicit host inventory through SolidAsh's native ongoing guard."
   def validate_vault_inventory(policy) when is_list(policy) do
     with true <- Keyword.keyword?(policy),
@@ -152,6 +180,25 @@ defmodule AshLotus.Security do
     do: app not in [nil, true, false] and module not in [nil, true, false]
 
   defp valid_inventory_entry?(_), do: false
+
+  defp valid_application?(application),
+    do: is_atom(application) and application not in [nil, true, false]
+
+  defp valid_native_dependency?(%Mix.Dep{app: application, opts: options}) do
+    valid_application?(application) and is_list(options) and Keyword.keyword?(options)
+  end
+
+  defp valid_native_dependency?(_), do: false
+
+  defp load_metadata_apps(applications) do
+    Enum.reduce_while(applications, :ok, fn application, :ok ->
+      case Application.load(application) do
+        :ok -> {:cont, :ok}
+        {:error, {:already_loaded, ^application}} -> {:cont, :ok}
+        _ -> {:halt, :error}
+      end
+    end)
+  end
 
   defp validate_native_version(dependency, %{version_floor: floor}) do
     case Application.spec(dependency, :vsn) do

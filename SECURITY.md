@@ -63,7 +63,12 @@ Existing project/environment ignores are rejected, every other advisory or
 retirement retains its native failure, and no acknowledgement is persisted.
 
 The manual task loads application metadata without starting applications,
-vaults or workers. It makes no database, ciphertext or provider writes. Its
+vaults or workers. Resolved native dependencies explicitly marked `app: false`
+are non-OTP assets and do not require an `.app` file. Only that explicit native
+option excludes metadata loading: missing real application metadata,
+`compile: false` alone, and missing root metadata still fail closed. Native
+vault discovery is not disabled by this asset distinction.
+It makes no database, ciphertext or provider writes. Its
 conditional scope was explicitly approved on 2026-10-11. Standing aliases,
 consumer scripts and CI remain unchanged pending separate wiring approval;
 they must not be represented as enforcing this manual inventory contract.

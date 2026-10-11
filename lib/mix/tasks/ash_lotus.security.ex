@@ -30,14 +30,17 @@ defmodule Mix.Tasks.AshLotus.Security do
   def run([]) do
     Mix.Task.run("compile", ["--warnings-as-errors"])
 
-    # Loading application metadata does not start its application callback.
-    for dependency <- Mix.Project.deps_apps() do
-      load_metadata!(dependency)
-    end
+    # Native dependency options distinguish app:false assets from real OTP
+    # applications. Missing metadata for actual applications still fails closed.
+    versions =
+      case AshLotus.Security.load_application_metadata(
+             Mix.Dep.cached(),
+             Mix.Project.config()[:app]
+           ) do
+        {:ok, versions} -> versions
+        {:error, message} -> Mix.raise(message)
+      end
 
-    load_metadata!(Mix.Project.config()[:app])
-
-    versions = Map.new(Mix.Project.deps_apps(), &{&1, Application.spec(&1, :vsn)})
     assert_ok!(AshLotus.Security.validate_hex_floors(versions))
     assert_ok!(AshLotus.Security.validate_advisory_scope(versions))
 
@@ -81,12 +84,4 @@ defmodule Mix.Tasks.AshLotus.Security do
 
   defp assert_ok!(:ok), do: :ok
   defp assert_ok!({:error, message}), do: Mix.raise(message)
-
-  defp load_metadata!(application) do
-    case Application.load(application) do
-      :ok -> :ok
-      {:error, {:already_loaded, ^application}} -> :ok
-      _ -> Mix.raise("Required application metadata could not be safely loaded")
-    end
-  end
 end

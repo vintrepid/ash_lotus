@@ -33,9 +33,9 @@
   "native_compatibility": {
     "command": "mix precommit (unchanged compatibility alias; does not include security audit)",
     "exit_status": 0,
-    "library_tests": 30,
+    "library_tests": 33,
     "installer_tests": 14,
-    "security_behavior_tests": 16,
+    "security_behavior_tests": 19,
     "standalone_peer_consumer_tests": 1,
     "production_compile": "passed",
     "production_release_assembly": "passed",
@@ -66,7 +66,7 @@
     },
     "manual_gate": {
       "command": "mix ash_lotus.security",
-      "fixture": "Normal isolated temporary Mix project using the same final native graph and canonical AshLotus source; no nested Mix.in_project harness",
+      "fixture": "Normal isolated temporary Mix project using the same final native graph, canonical AshLotus source and explicit app:false non-OTP asset; no nested Mix.in_project harness",
       "fixture_path": "/private/tmp/ash-lotus-security-audit.tr0xWg",
       "exit_status": 0,
       "declared_inventory": {
@@ -88,7 +88,8 @@
         "exit_status": 1,
         "error": "An explicit complete Cloak vault inventory is required"
       },
-      "arbitrary_host_vaults_certified": false
+      "arbitrary_host_vaults_certified": false,
+      "non_otp_assets": "Verified with a native path dependency marked app:false/compile:false and no application metadata. Native Mix.Dep.cached options exclude only explicitly app:false dependencies; missing genuine/root OTP metadata and compile:false alone fail closed, without starting application callbacks."
     },
     "authentication_attestation": "https://github.com/vintrepid/ash_authentication/blob/f0f1eb34e20ce0cdcfd11ef4b07585b3b9e61368/security_attestation.json",
     "upstream_authentication_jti_leaves": "All three exactly match official upstream v4.15.0; owning native 668 scenarios and seven independent regressions passed, as recorded by the owning artifact.",
@@ -111,5 +112,6 @@
     "No provider writes or actual message sends",
     "No merge or deployment"
   ],
-  "historical_evidence": "verification/korero_install_candidate.json is retained as the earlier blocked candidate, not rewritten as current evidence."
+  "historical_evidence": "verification/korero_install_candidate.json is retained as the earlier blocked candidate, not rewritten as current evidence.",
+  "followup": "The real-host Heroicons failure was diagnosed read-only through native resolved options. No host source or standing aliases/CI/scripts were changed by this narrow fix."
 }
