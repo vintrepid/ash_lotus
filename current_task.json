@@ -1,0 +1,20 @@
+{
+  "repository": "/Users/vince/dev/ash_lotus",
+  "checkout": "/Users/vince/dev/ash_lotus",
+  "branch": "feature/ash-lotus/dependency-install",
+  "base_branch": "main",
+  "owner": "Codex / bundle_installer",
+  "objective": "Compose the curated dependencies' own installers through ash_lotus.install, including Korero, without copying library or host code.",
+  "handoff": "Verify and push for review; no deployment authorized.",
+  "status": "verified_infrastructure_pending_dependency",
+  "dependency": "Await published Korero extraction/installer SHA before updating its immutable pin and checking the bundle-to-Korero consumer contract. The current pin has no installer; default installation therefore intentionally fails preflight rather than claiming success. Calvin copies are retained by the extraction owner.",
+  "verification": [
+    "mix precommit passed: library formatting and warning-free compilation, 12 tests of actual Ash/AshPostgres/AshAi native composition, dependency accounting, option passthrough including namespaced flags, duplicate composition, idempotency across applied runs, and rejection of database setup.",
+    "Standalone peer consumer test passed; prod OTP release assembled and native Ash/Korero lifecycle plus logging smoke check passed. Optional Igniter does not enter the runtime-only consumer dependency graph.",
+    "mix help ash_lotus.install and git diff --check passed. One persistent checkout; no worktree exceptions.",
+    "Existing Hex dependency security advisories were reported during unchanged consumer deps resolution. No unrelated dependency upgrades were performed; this is not a passing security audit."
+  ],
+  "branch_diff": "https://github.com/vintrepid/ash_lotus/compare/main...feature/ash-lotus/dependency-install",
+  "deployment_status": "Not merged or deployed. Infrastructure is ready for review; complete Korero installation remains pending the coordinated library pin.",
+  "checkout_exception": null
+}

@@ -18,6 +18,7 @@ defmodule AshLotus.MixProject do
       test_ignore_filters: [~r{^test/fixtures/}],
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      aliases: aliases(),
       description: "The curated Ash distribution for Lotus applications",
       package: package(),
       docs: docs(),
@@ -78,9 +79,14 @@ defmodule AshLotus.MixProject do
     ]
   end
 
+  def cli do
+    [preferred_envs: [precommit: :test]]
+  end
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:igniter, "~> 0.8.4", optional: true},
       {:ash,
        github: "vintrepid/ash_lotus_core",
        ref: "fc4185358a25b3e84b10eceb4f98666532701116",
@@ -122,6 +128,17 @@ defmodule AshLotus.MixProject do
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_environment), do: ["lib"]
+
+  defp aliases do
+    [
+      precommit: [
+        "format --check-formatted",
+        "compile --warnings-as-errors",
+        "test",
+        "cmd sh scripts/check_consumer.sh"
+      ]
+    ]
+  end
 
   defp package do
     [
