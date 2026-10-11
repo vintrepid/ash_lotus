@@ -1,0 +1,115 @@
+{
+  "schema": "ash-lotus.security-review.v1",
+  "verified_on": "2026-10-11",
+  "review_branch": "feature/ash-lotus/dependency-install",
+  "status": "BOUNDED_REVIEW_VERIFIED_STANDING_SECURITY_WIRING_PENDING",
+  "immutable_revisions": {
+    "ash": "070f3e382070699b48f7e823ba004022a7b69d2b",
+    "korero": "77ea12fc6dad5970070dde087e03940ed8c7c57d",
+    "ash_authentication": "f0f1eb34e20ce0cdcfd11ef4b07585b3b9e61368",
+    "solid_ash": "2e3ec1397fc0eef985fb9bff6a5a134ee453a13c"
+  },
+  "minimal_hex_security_versions": {
+    "decimal": "3.1.2",
+    "spark": "2.7.6",
+    "ash_authentication_phoenix": "2.17.4",
+    "mint": "1.10.2"
+  },
+  "lock_scope": {
+    "root_changed_packages": [
+      "ash",
+      "ash_authentication",
+      "ash_authentication_phoenix",
+      "decimal",
+      "korero",
+      "mint",
+      "solid_ash",
+      "spark"
+    ],
+    "consumer_new_required_runtime_dependency": "sourceror 1.12.4 (Korero's native AST support)",
+    "unrelated_versions_preserved": true,
+    "lazy_html": "Not selected in either distribution or peer consumer lock"
+  },
+  "native_compatibility": {
+    "command": "mix precommit (unchanged compatibility alias; does not include security audit)",
+    "exit_status": 0,
+    "library_tests": 30,
+    "installer_tests": 14,
+    "security_behavior_tests": 16,
+    "standalone_peer_consumer_tests": 1,
+    "production_compile": "passed",
+    "production_release_assembly": "passed",
+    "release_native_ash_korero_logging_smoke": "passed",
+    "codegen_check": {
+      "command": "mix ash.codegen --check",
+      "exit_status": 0
+    },
+    "documentation": {
+      "command": "mix docs",
+      "exit_status": 0
+    },
+    "lock_check": {
+      "command": "mix deps.get --check-locked",
+      "root": "passed",
+      "consumer": "passed"
+    },
+    "note": "Owning library compilation is warning-free. Unrelated dependencies emit inherited compiler warnings under Elixir 1.20; none were suppressed or changed."
+  },
+  "security": {
+    "raw_hex_audit": {
+      "root_exit_status": 1,
+      "consumer_exit_status": 1,
+      "advisories": [
+        "EEF-CVE-2026-95105 (Cloak 1.1.4)"
+      ],
+      "exclusions": []
+    },
+    "manual_gate": {
+      "command": "mix ash_lotus.security",
+      "fixture": "Normal isolated temporary Mix project using the same final native graph and canonical AshLotus source; no nested Mix.in_project harness",
+      "fixture_path": "/private/tmp/ash-lotus-security-audit.tr0xWg",
+      "exit_status": 0,
+      "declared_inventory": {
+        "cloak_inventory": "complete",
+        "cloak_vaults": []
+      },
+      "native_discovery": "No configured or active vault, and no compiled custom Cloak vault; only the pinned native SolidAsh implementation is allowed.",
+      "immutable_git_sources": "Exact repository/lock/fetched HEAD; clean tracked runtime source and no ignored or untracked extra lib source.",
+      "reviewed_hashes": {
+        "authentication_source_and_test_paths": 19,
+        "solid_ash_runtime_source_paths": 3
+      },
+      "authenticated_only_guard": "Native SolidAsh ongoing GCM-only startup/cache/hot-upgrade/encrypt/decrypt enforcement; no CTR or legacy rotation decryptors.",
+      "child_audit_acknowledgement": [
+        "CVE-2026-95105"
+      ],
+      "parent_environment_or_project_audit_ignores_persisted": false,
+      "missing_distribution_inventory": {
+        "exit_status": 1,
+        "error": "An explicit complete Cloak vault inventory is required"
+      },
+      "arbitrary_host_vaults_certified": false
+    },
+    "authentication_attestation": "https://github.com/vintrepid/ash_authentication/blob/f0f1eb34e20ce0cdcfd11ef4b07585b3b9e61368/security_attestation.json",
+    "upstream_authentication_jti_leaves": "All three exactly match official upstream v4.15.0; owning native 668 scenarios and seven independent regressions passed, as recorded by the owning artifact.",
+    "solid_ash_owning_checks": "33 native tests, including 21 boundary tests; format, compiler, docs and lock check passed at published revision.",
+    "approval": "Conditional single-advisory manual scope approved 2026-10-11. Persistent security-policy wiring was separately rejected by auto-review and remains pending explicit user approval."
+  },
+  "remaining_blockers": [
+    "Standing aliases, consumer scripts and CI are unchanged; no claim of a clean full security-precommit/hosted-CI gate.",
+    "Configured hosted CI still runs raw mix hex.audit, which will fail on Cloak until separately approved inventoried wiring is adopted.",
+    "Host adoption must validate its own actual inventory and native gates; this artifact is not a blanket attestation of arbitrary hosts. Separate standing CI wiring is not a prerequisite for bounded local adoption."
+  ],
+  "hosted_ci": {
+    "triggered": false,
+    "reason": "Review branches are not push triggers; no pull request created or authorized."
+  },
+  "prohibited_or_unperformed": [
+    "No Calvin changes",
+    "No live Dabhand installation",
+    "No database or ciphertext migration",
+    "No provider writes or actual message sends",
+    "No merge or deployment"
+  ],
+  "historical_evidence": "verification/korero_install_candidate.json is retained as the earlier blocked candidate, not rewritten as current evidence."
+}

@@ -60,11 +60,15 @@ upstream `stable-4.0`, not the next major prerelease on `main`. Git revisions ar
 advanced only to explicitly reviewed commits; discovery never merges or pushes
 forks automatically.
 
-The coordinated Korero installer candidate remains review-only: compatibility
-checks and the unwaived security blockers are recorded separately in
-[candidate verification](verification/korero_install_candidate.json). This
-branch has not advanced its installed dependency refs. Passing installer and
-release checks does not mean the security gate or production adoption has passed.
+This review branch now pins the verified native Korero extraction, patched core
+and authentication fork, and GCM-only SolidAsh implementation. Historical
+blocked checks remain in [candidate verification](verification/korero_install_candidate.json);
+final [bounded review evidence](verification/security_install_candidate.json)
+is recorded separately. This is not a host installation,
+merge or production deployment. Persistent CI/precommit security-policy wiring
+remains unchanged pending its separate approval; a passing compatibility check
+does not replace the manual, fail-closed security task described in
+[SECURITY.md](SECURITY.md).
 Hosts also supply a SAT solver for Ash policies, such as `picosat_elixir` or
 `simple_sat`; installation does not choose a policy solver for the application.
 
@@ -89,7 +93,7 @@ conflict. Such hosts need one explicit top-level exception alongside AshLotus:
 ```elixir
 {:ash,
  github: "vintrepid/ash_lotus_core",
- ref: "88c3fb4243de5c166ca1a71191bf10f5222813d1",
+ ref: "070f3e382070699b48f7e823ba004022a7b69d2b",
  override: true}
 ```
 

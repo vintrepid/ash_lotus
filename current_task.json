@@ -6,18 +6,20 @@
   "owner": "Codex / bundle_installer",
   "objective": "Compose the curated dependencies' own installers through ash_lotus.install, including Korero, without copying library or host code.",
   "handoff": "Verify and push for review; no deployment authorized.",
-  "status": "blocked_security_gate",
-  "dependency": "Korero extraction and native installer are published at 06b93da81bd9e4e1b2c5016559299f5a89459bd2; patched Ash core is published at 070f3e382070699b48f7e823ba004022a7b69d2b. Coordinated compatibility is tested only in an isolated synthetic candidate. Actual immutable refs remain unchanged pending the unwaived Cloak advisory and separately verified owning authentication fork JTI blocker. The installed old Korero pin has no native installer, so default installation intentionally fails preflight rather than claiming success. Calvin copies remain unchanged.",
+  "status": "review_handoff_verified_security_wiring_approval_pending",
+  "dependency": "Review pins select verified corrected Korero 77ea12fc6dad5970070dde087e03940ed8c7c57d, Ash core 070f3e382070699b48f7e823ba004022a7b69d2b, authentication f0f1eb34e20ce0cdcfd11ef4b07585b3b9e61368 and guarded SolidAsh 2e3ec1397fc0eef985fb9bff6a5a134ee453a13c. Native final-graph compatibility and bounded manual inventory checks passed. Suitable for bounded local host adoption after that host's actual inventory/native gates validate; no standing alias/CI change is needed for adoption. Standing security wiring is unchanged pending separate explicit approval; raw audit still fails solely Cloak. Calvin copies and host/production pins remain unchanged at this handoff.",
   "verification": [
-    "mix precommit passed: library formatting and warning-free compilation, 12 tests of actual Ash/AshPostgres/AshAi native composition, dependency accounting, option passthrough including namespaced flags, duplicate composition, idempotency across applied runs, and rejection of database setup.",
-    "Standalone peer consumer test passed; prod OTP release assembled and native Ash/Korero lifecycle plus logging smoke check passed. Optional Igniter does not enter the runtime-only consumer dependency graph.",
-    "mix help ash_lotus.install and git diff --check passed. One persistent checkout; no worktree exceptions.",
-    "Existing Hex dependency security advisories were reported during unchanged consumer deps resolution. No unrelated dependency upgrades were performed; this is not a passing security audit.",
-    "Durable candidate compatibility evidence and the explicit FAILED_NOT_WAIVED security gate are recorded in verification/korero_install_candidate.json. Minimal candidate Hex floors are Decimal 3.1.2, Spark 2.7.6, AuthPhoenix 2.17.4 and Mint 1.10.2; other tested versions remain unchanged.",
-    "Hosted CI has not run on the review branch: configured workflows trigger main pushes and pull requests only, and no pull request is authorized. Recorded checks are owning local checks."
+    "Unchanged compatibility mix precommit passed: formatting, warning-free owning library compilation,30 tests (14 native installer composition/idempotency cases,16 security behavior cases), standalone peer consumer1 test, prod compile/release/native Ash/Korero/logging smoke.",
+    "Final root and consumer mix deps.get --check-locked pass. Only four reviewed Git revisions and Decimal3.1.2/Spark2.7.6/AuthPhoenix2.17.4/Mint1.10.2 changed; consumer adds required Sourceror1.12.4. Unrelated versions are preserved.",
+    "mix ash.codegen --check, mix docs, mix format --check-formatted and git diff --check pass.",
+    "Manual mix ash_lotus.security passed only in an isolated normally compiled native graph with explicit complete empty vault inventory, reviewed immutable source/hashes and native discovery. Actual distribution invocation correctly refuses missing inventory.",
+    "Fully unexcluded root and consumer mix hex.audit both fail solely Cloak1.1.4 EEF-CVE-2026-95105. Raw audit is NOT clean. The manual child audit acknowledges only this approved native GCM-only condition, never arbitrary host vaults.",
+    "Bounded current evidence is verification/security_install_candidate.json. Earlier verification/korero_install_candidate.json remains historical FAILED_NOT_WAIVED evidence.",
+    "Standing aliases, consumer scripts and CI remain unchanged; no full security-precommit/CI-green claim. Hosted CI was not triggered: configured main/PR events exclude this review-branch push, and no PR is authorized."
   ],
-  "verification_evidence": "verification/korero_install_candidate.json",
+  "verification_evidence": "verification/security_install_candidate.json",
+  "policy_wiring": "Auto-review rejected persistent precommit/consumer/CI integration of the conditional native audit. User has been asked explicitly; implementation tests and owning library verification continue, but existing standing checks remain unchanged pending that answer.",
   "branch_diff": "https://github.com/vintrepid/ash_lotus/compare/main...feature/ash-lotus/dependency-install",
-  "deployment_status": "Not merged or deployed. Infrastructure is review-ready, but coordinated adoption and immutable pin publication are BLOCKED by security policy. No cipher/data migration, owning authentication fork patch or audit exemption has been authorized.",
+  "deployment_status": "Not merged, installed into a live host, or deployed. The owning authentication fix, native GCM-only SolidAsh guard and conditional manual single-advisory scope were explicitly approved2026-10-11. Bounded review branch evidence passes; permanent CI/security-policy wiring remains awaiting separate approval. No database/ciphertext migration, provider write, merge or deploy is authorized.",
   "checkout_exception": null
 }

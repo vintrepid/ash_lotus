@@ -10,7 +10,7 @@ defmodule AshLotus.Install do
   tasks when composing; treating those tasks as installed would be misleading.
   """
 
-  @libraries ~w(ash ash_postgres ash_phoenix ash_state_machine ash_oban ash_money ash_admin ash_authentication ash_authentication_phoenix ash_json_api ash_ai ash_cloak ash_paper_trail ash_archival ash_sql ex_money_sql decimal cinder journal_ash solid_ash tag_ash korero)
+  @libraries ~w(ash ash_postgres ash_phoenix ash_state_machine ash_oban ash_money ash_admin ash_authentication ash_authentication_phoenix ash_json_api ash_ai ash_cloak ash_paper_trail ash_archival ash_sql ex_money_sql decimal spark mint cinder journal_ash solid_ash tag_ash korero)
 
   @doc "The libraries whose public installers are composed in dependency order."
   def libraries, do: @libraries

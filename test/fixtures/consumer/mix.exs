@@ -18,7 +18,7 @@ defmodule AshLotus.Consumer.MixProject do
         # Keep this aligned with the core pin governed by AshLotus.
         {:ash,
          github: "vintrepid/ash_lotus_core",
-         ref: "fc4185358a25b3e84b10eceb4f98666532701116",
+         ref: "070f3e382070699b48f7e823ba004022a7b69d2b",
          override: true}
       ]
     ]
