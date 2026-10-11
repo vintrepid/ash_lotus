@@ -15,7 +15,7 @@ defmodule AshLotus.Security.Provenance do
       },
       korero: %{
         repository: "https://github.com/vintrepid/korero.git",
-        commit: "77ea12fc6dad5970070dde087e03940ed8c7c57d",
+        commit: "49e23d8724611e0c10e64d0dde4635760aaa41e9",
         source_hashes: %{}
       },
       ash_authentication: %{

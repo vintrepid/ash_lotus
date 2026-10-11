@@ -5,7 +5,7 @@
   "status": "BOUNDED_REVIEW_VERIFIED_STANDING_SECURITY_WIRING_PENDING",
   "immutable_revisions": {
     "ash": "070f3e382070699b48f7e823ba004022a7b69d2b",
-    "korero": "77ea12fc6dad5970070dde087e03940ed8c7c57d",
+    "korero": "49e23d8724611e0c10e64d0dde4635760aaa41e9",
     "ash_authentication": "f0f1eb34e20ce0cdcfd11ef4b07585b3b9e61368",
     "solid_ash": "2e3ec1397fc0eef985fb9bff6a5a134ee453a13c"
   },
@@ -107,11 +107,12 @@
   },
   "prohibited_or_unperformed": [
     "No Calvin changes",
-    "No live Dabhand installation",
+    "No host edits by the library writer; host adoption is separately consumer-owned",
     "No database or ciphertext migration",
     "No provider writes or actual message sends",
     "No merge or deployment"
   ],
   "historical_evidence": "verification/korero_install_candidate.json is retained as the earlier blocked candidate, not rewritten as current evidence.",
-  "followup": "The real-host Heroicons failure was diagnosed read-only through native resolved options. No host source or standing aliases/CI/scripts were changed by this narrow fix."
+  "followup": "The real-host Heroicons failure was diagnosed read-only through native resolved options. No host source or standing aliases/CI/scripts were changed by this narrow fix.",
+  "korero_installer_followup": "Published verified49e23d8724611e0c10e64d0dde4635760aaa41e9 adds accurate generated InboxFolder/InboxPreference/InboxItemState moduledocs and native authorize_references changeset/context/changeset spec only; all66 Korero native tests/audit/compiler/format/docs pass, runtime guards unchanged. Final distribution33 tests/peer/release/manual gate/codegen reverified; only Korero tuples changed in this repin."
 }
