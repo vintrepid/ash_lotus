@@ -25,6 +25,11 @@ defmodule AshLotus.MixProject do
       maestro: [
         owned_branch: "main",
         owned_forks: [
+          ash_ri: [
+            branch: "main",
+            repository: "https://github.com/vintrepid/ash_ri.git",
+            update: :manual
+          ],
           ash: [
             branch: "main",
             repository: "https://github.com/vintrepid/ash_lotus_core.git",
@@ -74,6 +79,8 @@ defmodule AshLotus.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
+      {:ash_ri,
+       github: "vintrepid/ash_ri", ref: "de13c28039041972c8c03597611708ae4e07e4e0", override: true},
       extra_applications: [:logger]
     ]
   end
@@ -96,7 +103,7 @@ defmodule AshLotus.MixProject do
        override: true},
       {:tag_ash,
        github: "vintrepid/tag_ash",
-       ref: "a525fc456e4b0828f08fc61c956c439378ccc2aa",
+       ref: "fa6de61e1f5733b063dd09fed08d7d3de12e5959",
        override: true},
       {:cinder, github: "vintrepid/cinder", ref: "9d1140c", override: true},
       {:ash_authentication,

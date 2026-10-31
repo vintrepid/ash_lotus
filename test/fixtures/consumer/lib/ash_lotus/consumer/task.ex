@@ -28,7 +28,7 @@ defmodule AshLotus.Consumer.Task do
   use Ash.Resource,
     domain: AshLotus.Consumer.Domain,
     data_layer: Ash.DataLayer.Ets,
-    extensions: [AshLotus.Consumer.EtsIdentities],
+    extensions: [AshRi, AshLotus.Consumer.EtsIdentities],
     fragments: [Korero.Task]
 
   ets do

@@ -13,6 +13,7 @@ defmodule AshLotus.Consumer.ReleaseCheck do
   @event "ash_lotus.consumer.release_check"
   @required_applications [
     :ash,
+    :ash_ri,
     :korero,
     :oban,
     :cloak,
@@ -24,6 +25,7 @@ defmodule AshLotus.Consumer.ReleaseCheck do
   ]
   @required_modules [
     Ash,
+    AshRi,
     TagAsh.Domain,
     TagAsh.SubjectRef,
     Korero.Task,
@@ -39,6 +41,7 @@ defmodule AshLotus.Consumer.ReleaseCheck do
 
     assert_dependencies_loaded!()
     assert_dependencies_started!()
+    assert_ri_hooks!()
     assert_tag_reference_round_trip!()
     assert_ash_round_trip!()
     assert_peer_round_trip!()
@@ -52,6 +55,17 @@ defmodule AshLotus.Consumer.ReleaseCheck do
     Enum.each(@required_modules, fn module ->
       unless Code.ensure_loaded?(module), do: raise("missing curated module #{inspect(module)}")
     end)
+  end
+
+  defp assert_ri_hooks! do
+    for resource <- [Note, Task] do
+      unless Enum.any?(
+               Ash.Resource.Info.changes(resource),
+               &(elem(&1.change, 0) == AshRi.DeletionGuard)
+             ) do
+        raise "native RI destroy hooks missing from #{inspect(resource)}"
+      end
+    end
   end
 
   defp assert_dependencies_started! do

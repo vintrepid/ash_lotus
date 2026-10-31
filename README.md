@@ -61,6 +61,8 @@ and [convergence implementation](https://github.com/elixir-lang/elixir/blob/v1.2
 
 The distribution supplies:
 
+- AshRi for metadata-driven relational integrity, transactional deletion review,
+  and resource-owned display names through native Ash lifecycle hooks;
 - the upstream-tracking `ash_lotus_core` fork as OTP application `:ash`;
 - Kōrero for conversations and their work, with Oban-backed execution and an Ash task-queue lifecycle,
   composed into host-owned resources without duplicating their business actions;
@@ -76,7 +78,14 @@ The distribution supplies:
   versions selected for the Lotus stack, including its Ecto money adapter.
 
 Application code still calls `Ash`, `TagAsh`, `Korero`, `Logger`, `JournalAsh`,
-`SolidAsh`, and `Cinder` directly. AshLotus is dependency policy, not a facade.
+`SolidAsh`, `AshRi`, and `Cinder` directly. AshLotus is dependency policy, not a facade.
+
+Adopt `extensions: [AshRi]` in each project's persistent resource construction
+layer, including library-owned resources, and configure `:ash_ri, :adapter` with
+the host's policy/schema boundary. Resource metadata and ordinary Ash actions
+govern deletion; hosts own authorization, UI and developer notifications. Run
+`mix ash_ri.audit` to catch hard-destroy resources missing adoption. Loading a
+dependency alone does not silently install callbacks in existing resources.
 
 Korero owns the Oban integration; JournalAsh owns Cloak-backed journal encryption.
 Their native `Oban` and `Cloak` APIs are also part of the supplied dependency

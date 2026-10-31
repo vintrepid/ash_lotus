@@ -6,6 +6,7 @@ defmodule AshLotus.Consumer.Note do
   @moduledoc false
 
   use Ash.Resource,
+    extensions: [AshRi],
     data_layer: :embedded,
     validate_domain_inclusion?: false
 
