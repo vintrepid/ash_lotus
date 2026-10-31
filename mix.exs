@@ -79,8 +79,6 @@ defmodule AshLotus.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      {:ash_ri,
-       github: "vintrepid/ash_ri", ref: "de13c28039041972c8c03597611708ae4e07e4e0", override: true},
       extra_applications: [:logger]
     ]
   end
@@ -88,9 +86,13 @@ defmodule AshLotus.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ash_ri,
+       github: "vintrepid/ash_ri", ref: "de13c28039041972c8c03597611708ae4e07e4e0", override: true},
+      # Match the Apple identity verification fix already used by consumers.
+      {:assent, "~> 0.3.2", override: true},
       {:ash,
        github: "vintrepid/ash_lotus_core",
-       ref: "fc4185358a25b3e84b10eceb4f98666532701116",
+       ref: "4b4c6fded982d64eab689f0c09d6b60efcbcc9d0",
        override: true},
       {:korero, github: "vintrepid/korero", ref: "33ac3dc", override: true},
       {:journal_ash,
@@ -108,21 +110,21 @@ defmodule AshLotus.MixProject do
       {:cinder, github: "vintrepid/cinder", ref: "9d1140c", override: true},
       {:ash_authentication,
        git: "https://github.com/vintrepid/ash_authentication.git", ref: "42d1af7", override: true},
-      {:ash_postgres, "~> 2.13 and >= 2.13.1"},
-      {:ash_cloak, "~> 0.4.0"},
-      {:ash_phoenix, "~> 2.3 and >= 2.3.25"},
-      {:ash_ai, "~> 1.0 and >= 1.0.3"},
-      {:ash_paper_trail, "~> 0.7.0"},
+      {:ash_postgres, "~> 2.15 and >= 2.15.2"},
+      {:ash_cloak, "~> 0.5.0"},
+      {:ash_phoenix, "~> 2.3 and >= 2.3.26"},
+      {:ash_ai, "~> 1.4 and >= 1.4.1"},
+      {:ash_paper_trail, "~> 0.8.1"},
       {:ash_state_machine, "~> 0.2.13"},
-      {:ash_archival, "~> 2.0 and >= 2.0.3"},
-      {:ash_money, "~> 0.2.6"},
+      {:ash_archival, "~> 2.0 and >= 2.0.5"},
+      {:ash_money, "~> 0.2.7"},
       {:ash_oban, "~> 0.8.14"},
-      {:ash_admin, "~> 1.3 and >= 1.3.2"},
-      {:ash_authentication_phoenix, "~> 2.17 and >= 2.17.3"},
-      {:ash_json_api, "~> 1.7 and >= 1.7.1"},
-      {:ash_sql, "~> 0.7.3"},
-      {:ex_money_sql, "~> 2.1 and >= 2.1.0"},
-      {:decimal, "~> 3.1 and >= 3.1.1"},
+      {:ash_admin, "~> 1.4"},
+      {:ash_authentication_phoenix, "~> 2.17 and >= 2.17.4"},
+      {:ash_json_api, "~> 1.8"},
+      {:ash_sql, "~> 0.8.4"},
+      {:ex_money_sql, "~> 2.2"},
+      {:decimal, "~> 3.2"},
       {:ex_doc, "~> 0.40.4", only: :dev, runtime: false}
     ]
   end
