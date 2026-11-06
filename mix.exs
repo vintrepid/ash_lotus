@@ -82,7 +82,7 @@ defmodule AshLotus.MixProject do
             dependency: :cinder,
             requirement: "~> 0.9",
             version: "1.0.0-dev",
-            revision: "40e2d2fa47da8a4b49640329c236baa84ca2adeb",
+            revision: "8a041ed2c1c3d2c401f17af2752a316140140b33",
             reason:
               "Strict dependency compilation passed with Cinder 1.0.0-dev; consumer and host regression gates also apply."
           ]
@@ -124,10 +124,10 @@ defmodule AshLotus.MixProject do
        ref: "87ee5a5e1a8976b0f82195fd4002a21caf776c6b",
        override: true},
       {:cinder,
-       github: "vintrepid/cinder", ref: "40e2d2fa47da8a4b49640329c236baa84ca2adeb", override: true},
+       github: "vintrepid/cinder", ref: "8a041ed2c1c3d2c401f17af2752a316140140b33", override: true},
       {:ash_authentication,
        git: "https://github.com/vintrepid/ash_authentication.git",
-       ref: "c28f9396cea7835f0ef3b92ceee303770075bde7",
+       ref: "bf404dc3fd424464b6f78fdbb60d7fab57411afc",
        override: true},
       {:ash_postgres, ">= 2.15.2"},
       {:ash_cloak, ">= 0.5.0"},
