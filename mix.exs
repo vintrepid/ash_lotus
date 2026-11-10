@@ -82,7 +82,7 @@ defmodule AshLotus.MixProject do
             dependency: :cinder,
             requirement: "~> 0.9",
             version: "1.0.0-dev",
-            revision: "8a041ed2c1c3d2c401f17af2752a316140140b33",
+            revision: "e2714b3758d2c80f2bd45dd2d8a314ea7145f344",
             reason:
               "Strict dependency compilation passed with Cinder 1.0.0-dev; consumer and host regression gates also apply."
           ]
@@ -102,12 +102,12 @@ defmodule AshLotus.MixProject do
   defp deps do
     [
       {:ash_ri,
-       github: "vintrepid/ash_ri", ref: "de13c28039041972c8c03597611708ae4e07e4e0", override: true},
+       github: "vintrepid/ash_ri", ref: "e9d2b956f041a5975ed819d0866fa84e67a5f428", override: true},
       # Match the Apple identity verification fix already used by consumers.
       {:assent, ">= 0.3.2", override: true},
       {:ash,
        github: "vintrepid/ash_lotus_core",
-       ref: "3d6e828e05495f34daee1439521076fb011d60b6",
+       ref: "da6f68c184eb45888961cae74b8c8837a789b0d3",
        override: true},
       {:korero,
        github: "vintrepid/korero", ref: "392022fb66b3a6c460f16b725a4d2466488bfbdc", override: true},
@@ -124,10 +124,10 @@ defmodule AshLotus.MixProject do
        ref: "87ee5a5e1a8976b0f82195fd4002a21caf776c6b",
        override: true},
       {:cinder,
-       github: "vintrepid/cinder", ref: "8a041ed2c1c3d2c401f17af2752a316140140b33", override: true},
+       github: "vintrepid/cinder", ref: "e2714b3758d2c80f2bd45dd2d8a314ea7145f344", override: true},
       {:ash_authentication,
        git: "https://github.com/vintrepid/ash_authentication.git",
-       ref: "bf404dc3fd424464b6f78fdbb60d7fab57411afc",
+       ref: "ea33a46727a4fcb42d0f01d26362c7034ff6b0bf",
        override: true},
       {:ash_postgres, ">= 2.15.2"},
       {:ash_cloak, ">= 0.5.0"},
