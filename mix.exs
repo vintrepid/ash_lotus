@@ -102,7 +102,7 @@ defmodule AshLotus.MixProject do
   defp deps do
     [
       {:ash_ri,
-       github: "vintrepid/ash_ri", ref: "e9d2b956f041a5975ed819d0866fa84e67a5f428", override: true},
+       github: "vintrepid/ash_ri", ref: "275a538e6896235605208cde5e9246a9fa101dfd", override: true},
       # Match the Apple identity verification fix already used by consumers.
       {:assent, ">= 0.3.2", override: true},
       {:ash,
