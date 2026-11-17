@@ -173,8 +173,8 @@
     {:hex, :castore, "1.0.22", "a01978e6a5d42fa3a34143630588f92036e7d90e2309ecdd466722d1279a2213",
      [:mix], [], "hexpm", "c2a4d42723b4affbc1c3e15d8f6df3f7d8f1f627c84de643383634cce58493d5"},
   cinder:
-    {:git, "https://github.com/vintrepid/cinder.git", "019b58d3e5d40f878c4861061195b4fc3d8f56fb",
-     [ref: "019b58d3e5d40f878c4861061195b4fc3d8f56fb"]},
+    {:git, "https://github.com/vintrepid/cinder.git", "d58b2e3990caf7822dd803e9e469c76235d43d73",
+     [ref: "d58b2e3990caf7822dd803e9e469c76235d43d73"]},
   cloak:
     {:hex, :cloak, "1.1.4", "aba387b22ea4d80d92d38ab1890cc528b06e0e7ef2a4581d71c3fdad59e997e7",
      [:mix], [{:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: true]}], "hexpm",
