@@ -19,12 +19,58 @@ minor and patch updates within their major version. Pre-1.0 packages allow patch
 updates within their minor version. Dependency updates must leave the new
 minimums visible in the diff, not only replace the lockfile.
 
+## Host installation
+
+After declaring the distribution dependency, add optional installer tooling to
+the host (`{:igniter, "~> 0.8.4", only: :dev, runtime: false}`), fetch dependencies,
+and run:
+
+```sh
+mix ash_lotus.install --dry-run
+mix ash_lotus.install
+```
+
+This composes the curated dependencies' native Igniter installers in dependency
+order; AshLotus does not copy their implementation. Every dependency is accounted
+for. Libraries with no installer are explicitly reported as **not installed**,
+and an existing ordinary Mix installer that cannot be composed is an error.
+Korero must supply its native installer when selected; an older pin without it
+cannot be mistaken for a working Inbox installation.
+
+Existing applications can adopt a deliberate subset, for example
+`mix ash_lotus.install --libraries korero`. Native flags such as `--repo` and
+`--user` pass through, including Igniter's namespaced flags. Repeated library
+names do not duplicate installer execution within the same plan. Native
+installers retain ownership of host-specific resources, routes and configuration.
+Review those changes, especially when adopting authentication or Oban into an
+existing application. AshAi's native installer adds its optional LLM client by
+default; pass `--no-req-llm` when that integration is not wanted.
+
+The installer generates code and may schedule `ash.codegen`; it does not migrate
+a database, start a queue, invoke business actions, or send messages. Database
+`--setup` is rejected. Hosts review generated migrations and use their existing
+bounded setup/release workflow to apply them. Account-specific channels,
+credentials, authorization and classifiers remain host/user configuration,
+never global guesses made by the dependency bundle.
+
 Fork policies in `mix.exs` identify each owned branch and its upstream branch.
 Update tooling must compare both: being current with our fork does not mean the
 fork has incorporated upstream changes. Authentication deliberately tracks
 upstream `stable-4.0`, not the next major prerelease on `main`. Git revisions are
 advanced only to explicitly reviewed commits; discovery never merges or pushes
 forks automatically.
+
+This review branch now pins the verified native Korero extraction, patched core
+and authentication fork, and GCM-only SolidAsh implementation. Historical
+blocked checks remain in [candidate verification](verification/korero_install_candidate.json);
+final [bounded review evidence](verification/security_install_candidate.json)
+is recorded separately. This is not a host installation,
+merge or production deployment. Persistent CI/precommit security-policy wiring
+remains unchanged pending its separate approval; a passing compatibility check
+does not replace the manual, fail-closed security task described in
+[SECURITY.md](SECURITY.md).
+Hosts also supply a SAT solver for Ash policies, such as `picosat_elixir` or
+`simple_sat`; installation does not choose a policy solver for the application.
 
 ```elixir
 defp deps do
@@ -47,7 +93,7 @@ conflict. Such hosts need one explicit top-level exception alongside AshLotus:
 ```elixir
 {:ash,
  github: "vintrepid/ash_lotus_core",
- ref: "88c3fb4243de5c166ca1a71191bf10f5222813d1",
+ ref: "070f3e382070699b48f7e823ba004022a7b69d2b",
  override: true}
 ```
 
@@ -139,6 +185,9 @@ See [SECURITY.md](SECURITY.md) for the dependency-pin and vulnerability
 reporting policy.
 
 ## Consumer compatibility check
+
+`mix precommit` runs formatting, warning-free library compilation, installer
+behavior tests, and the existing standalone consumer/release check below.
 
 Run `sh scripts/check_consumer.sh` from this checkout. The standalone fixture
 declares a path dependency on `ash_lotus`, a synthetic independent library with

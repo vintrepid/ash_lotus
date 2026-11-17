@@ -67,7 +67,14 @@ defmodule AshLotus.MixProject do
           solid_ash: [
             branch: "master",
             repository: "https://github.com/vintrepid/solid_ash.git",
-            update: :manual
+            update: :manual,
+            verify: [
+              ["env", "MIX_ENV=test", "mix", "format", "--check-formatted"],
+              ["env", "MIX_ENV=test", "mix", "compile", "--warnings-as-errors"],
+              ["mix", "test", "test/vault_security_test.exs", "test/security_inventory_test.exs"],
+              ["env", "MIX_ENV=test", "mix", "solid_ash.security"],
+              ["mix", "test"]
+            ]
           ],
           tag_ash: [
             branch: "main",
@@ -87,7 +94,8 @@ defmodule AshLotus.MixProject do
               "Strict dependency compilation passed with Cinder 1.0.0-dev; consumer and host regression gates also apply."
           ]
         ]
-      ]
+      ],
+      aliases: aliases()
     ]
   end
 
@@ -99,6 +107,7 @@ defmodule AshLotus.MixProject do
   end
 
   # Run "mix help deps" to learn about dependencies.
+  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
       {:ash_ri,
@@ -107,7 +116,7 @@ defmodule AshLotus.MixProject do
       {:assent, ">= 0.3.2", override: true},
       {:ash,
        github: "vintrepid/ash_lotus_core",
-       ref: "ab293b1a81a9ce3b31cd433cdda5942b7f6b5896",
+       ref: "216b84abb9fc59df778211b4b932cf14552eb5a2",
        override: true},
       {:korero,
        github: "vintrepid/korero", ref: "833e4f0e426ed5cfdba5344515befe2e71e2e460", override: true},
@@ -117,17 +126,17 @@ defmodule AshLotus.MixProject do
        override: true},
       {:solid_ash,
        github: "vintrepid/solid_ash",
-       ref: "7b1d913ab1da5a8bdad1f8da5e8b7cdb52d164d5",
+       ref: "8c2120d3425512ac086066da9088c2c65c832aeb",
        override: true},
       {:tag_ash,
        github: "vintrepid/tag_ash",
-       ref: "41773a38049c22b902d4c9390d8cb9abbf67a07f",
+       ref: "984159d76787c39697f92735a6c774cc930d45f9",
        override: true},
       {:cinder,
        github: "vintrepid/cinder", ref: "019b58d3e5d40f878c4861061195b4fc3d8f56fb", override: true},
       {:ash_authentication,
        git: "https://github.com/vintrepid/ash_authentication.git",
-       ref: "330ea7b02ecc131c566ef55e22f65cc5ed171505",
+       ref: "eb13b2bda797f20645d54181943e10162be8d240",
        override: true},
       {:ash_postgres, ">= 2.15.2"},
       {:ash_cloak, ">= 0.5.0"},
@@ -141,10 +150,13 @@ defmodule AshLotus.MixProject do
       {:ash_admin, ">= 1.4.0"},
       {:ash_authentication_phoenix, ">= 2.17.4"},
       {:ash_json_api, ">= 1.8.0"},
-      {:ash_sql, ">= 0.8.4"},
+      {:ash_sql, ">= 0.8.9"},
       {:ex_money_sql, ">= 2.2.0"},
       {:decimal, ">= 3.2.0"},
-      {:ex_doc, ">= 0.40.4", only: :dev, runtime: false}
+      {:ex_doc, ">= 0.40.4", only: :dev, runtime: false},
+      {:igniter, ">= 0.8.5", optional: true},
+      {:spark, ">= 2.7.10"},
+      {:mint, ">= 1.10.2"}
     ]
   end
 
@@ -165,6 +177,21 @@ defmodule AshLotus.MixProject do
       main: "readme",
       source_url: @source_url,
       extras: ["README.md", "CHANGELOG.md", "SECURITY.md"]
+    ]
+  end
+
+  def cli do
+    [preferred_envs: [precommit: :test]]
+  end
+
+  defp aliases do
+    [
+      precommit: [
+        "format --check-formatted",
+        "compile --warnings-as-errors",
+        "test",
+        "cmd sh scripts/check_consumer.sh"
+      ]
     ]
   end
 end

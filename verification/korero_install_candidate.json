@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "BLOCKED_SECURITY_GATE",
+  "as_of": "2026-10-11",
+  "branch": "feature/ash-lotus/dependency-install",
+  "base_branch": "main",
+  "infrastructure_commit": "f6bbac4754b94348d3f8cded7c346c5285521383",
+  "handoff": "Review only; no merge, deployment, database migration, owning authentication fork change, cipher migration, or audit exemption authorized",
+  "installed_refs_unchanged": {
+    "ash": "fc4185358a25b3e84b10eceb4f98666532701116",
+    "korero": "33ac3dc27e596cdfddfae12b079d768ef6e8b3ed",
+    "ash_authentication": "42d1af7c9d2078e193b566b75467aa1e3f9acf43"
+  },
+  "review_candidates": {
+    "ash": {
+      "repository": "https://github.com/vintrepid/ash_lotus_core",
+      "commit": "070f3e382070699b48f7e823ba004022a7b69d2b",
+      "upstream_version": "3.34.6",
+      "matrix_mode": "Temporary read-only path override in an isolated synthetic distribution and peer consumer; verified owning checkout HEAD equals this published commit"
+    },
+    "korero": {
+      "repository": "https://github.com/vintrepid/korero",
+      "commit": "06b93da81bd9e4e1b2c5016559299f5a89459bd2",
+      "library_owner_gate": "mix precommit passed with 65 tests, clean audit and zero advisory suppressions; includes final execution actor and immutable Channel attribute guards against forced native changeset modifications",
+      "matrix_status": "PASSED_COMPATIBILITY_ONLY at the exact final published commit; distribution security gate remains failed"
+    },
+    "tested_minimal_hex_floors": {
+      "decimal": "3.1.2",
+      "spark": "2.7.6",
+      "ash_authentication_phoenix": "2.17.4",
+      "mint": "1.10.2"
+    },
+    "unrelated_versions": "Existing tested Finch, HPAX and Phoenix family versions preserved; no wholesale dependency refresh"
+  },
+  "compatibility_evidence": {
+    "infrastructure": "Published infrastructure passed its owning mix precommit: 12 native installer tests, peer consumer test, prod compilation, OTP release assembly and release execution",
+    "native_korero_installer": "Candidate passed 8 native behavior tests before integration into Korero: actor-scoped resource actions, fail-closed cross-actor request-key collision, Channel actor/app scope, source/folder authorization, authenticated routing, option passthrough and applied-run idempotency",
+    "prior_coordinated_candidate": "Korero 03464f8 and bd75bc0 with patched core 070f3e3 and minimal Hex floors passed the complete isolated matrix: 14 bundle tests, peer consumer test, prod compilation, assembled OTP release and native release smoke",
+    "final_coordinated_candidate": "At exact final Korero 06b93da81bd9e4e1b2c5016559299f5a89459bd2 and core 070f3e382070699b48f7e823ba004022a7b69d2b, mix precommit exited 0: 14 installer tests, 1 standalone peer consumer test, production compilation, OTP release assembly and native release execution all passed. Root and peer consumer fetched Korero checkouts were verified at that exact commit; the clean path core override was verified at its published commit.",
+    "retained_fixture": "The tracked review-only fixture itself was explicitly executed against the final isolated candidate: 2 tests passed. It intentionally remains outside the installed distribution's automatic test filters until adoption is authorized.",
+    "behavior_scope": "Native Ash/AshPostgres/AshAi composition, explicit missing-installer accounting, namespaced host option passthrough, private Inbox route composition, duplicate/applied-run idempotency, codegen-only scheduling, native task lifecycle, TagAsh reference round-trip and bounded synthetic JournalAsh observation",
+    "not_proved": "Production installation, application-specific authorization, real message transport, durable encrypted storage, classification model quality or deployment",
+    "hosted_ci": "Not run on either review branch: configured workflows trigger main pushes and pull requests only; no pull request was authorized. These results are owning local checks."
+  },
+  "reproduction": {
+    "synthetic_bundle_fixture": "verification/korero_bundle_candidate_test.exs",
+    "fixture_scope": "Two retained actual Igniter composition and applied-rerun tests. The synthetic authenticated hook tests route composition only, not application authentication. Kept outside test/ because the unchanged installed Korero ref intentionally lacks the native installer.",
+    "isolation": "Use an isolated copy of infrastructure commit f6bbac4754b94348d3f8cded7c346c5285521383, not a production checkout or database. Add the two retained tests to test/, select the exact candidate refs and minimum Hex floors above, and preserve unrelated locked versions. The candidate's direct Mint floor is included in AshLotus.Install's curated accounting list as a library without a native installer.",
+    "ash_override": "The recorded matrix uses a temporary path override for a clean owning core checkout at exactly 070f3e382070699b48f7e823ba004022a7b69d2b; the synthetic peer consumer uses the same override. Verify that checkout HEAD and status before running.",
+    "commands": [
+      "mix deps.get",
+      "mix precommit",
+      "mix hex.audit"
+    ],
+    "expected_results": "Compatibility passes 14 installer tests, 1 standalone consumer test, production release assembly and native release execution. The unsuppressed security audit exits 1 for Cloak; the separately reviewed Git authentication fork remains a blocker that Hex audit does not scan."
+  },
+  "security_gate": {
+    "status": "FAILED_NOT_WAIVED",
+    "candidate_mix_hex_audit_exit_code": 1,
+    "excluded_advisories": [],
+    "remaining_hex_advisory": {
+      "package": "cloak",
+      "version": "1.1.4",
+      "advisory": "CVE-2026-95105 / EEF-CVE-2026-95105",
+      "fixed_release": null,
+      "source": "https://cna.erlef.org/cves/CVE-2026-95105.html",
+      "finding": "Official advisory affects every release from 0.1.0-pre onward. A version bump cannot fix it. AES-GCM-only vaults and removal of CTR decryptors are the documented workaround, not an unreviewed blanket audit exemption."
+    },
+    "separate_owned_git_fork_blocker": {
+      "package": "ash_authentication",
+      "commit": "42d1af7c9d2078e193b566b75467aa1e3f9acf43",
+      "declared_version": "4.14.2",
+      "native_auth_phoenix_required_floor": "4.15.0",
+      "advisory": "CVE-2026-86533 / GHSA-w374-hvrx-66hg",
+      "source": "https://cna.erlef.org/cves/CVE-2026-86533.html",
+      "finding": "Plug.Helpers still splits and discards the JTI without checking revocation. Patched AuthPhoenix LiveSession does not fix that distinct Plug-side path. Hex audit does not verify owned Git forks; a passing compatibility matrix is not proof this security boundary is fixed."
+    },
+    "next_authority_required": "Explicit developer direction for the owning authentication fork and enforced GCM-only/non-applicability policy, or acceptance that coordinated adoption remains blocked and review-only"
+  },
+  "host_requirements": {
+    "authorization_solver": "Hosts supply a SAT solver for generated Ash policies; Dabhand already declares picosat_elixir",
+    "private_routing": "Host-owned authenticated on_mount contract is explicit; no guessed public route or placeholder Inbox UI",
+    "execution": "No database migration, worker startup, business action dispatch or message transmission occurs during installation"
+  }
+}
