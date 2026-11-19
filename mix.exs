@@ -116,7 +116,7 @@ defmodule AshLotus.MixProject do
       {:assent, ">= 0.3.2", override: true},
       {:ash,
        github: "vintrepid/ash_lotus_core",
-       ref: "3ba80ea825a127e63b0f546e22edd1161785d306",
+       ref: "73b2402256c65620e12782c106311f4ee71c0c57",
        override: true},
       {:korero,
        github: "vintrepid/korero", ref: "833e4f0e426ed5cfdba5344515befe2e71e2e460", override: true},
