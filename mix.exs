@@ -85,11 +85,11 @@ defmodule AshLotus.MixProject do
         compatibility_overrides: [
           [
             consumer: :ash_admin,
-            consumer_version: "1.4.0",
+            consumer_version: "1.5.0",
             dependency: :cinder,
             requirement: "~> 0.9",
             version: "1.0.0-dev",
-            revision: "43280ff34e8522e2b093414ad089a4692a3abbc5",
+            revision: "1efd02a59b8c487d9226ac7608f48a39f64e63b3",
             reason:
               "Strict dependency compilation passed with Cinder 1.0.0-dev; consumer and host regression gates also apply."
           ]
@@ -116,10 +116,10 @@ defmodule AshLotus.MixProject do
       {:assent, ">= 0.3.2", override: true},
       {:ash,
        github: "vintrepid/ash_lotus_core",
-       ref: "eff6d7420a7fe4701df208f2f1f78b3540efab25",
+       ref: "8070f2e09ee553189797e8f973f05994828419e6",
        override: true},
       {:korero,
-       github: "vintrepid/korero", ref: "833e4f0e426ed5cfdba5344515befe2e71e2e460", override: true},
+       github: "vintrepid/korero", ref: "cc7105f4586cd14648c972e8a1ed09b4e42c7e3f", override: true},
       {:journal_ash,
        github: "vintrepid/journal_ash",
        ref: "d2d2d8f973c2c96c088e3fec065112f9ed7724ac",
@@ -133,10 +133,10 @@ defmodule AshLotus.MixProject do
        ref: "5b4bc7e3da7acd92608efc7965f49efe3891f900",
        override: true},
       {:cinder,
-       github: "vintrepid/cinder", ref: "43280ff34e8522e2b093414ad089a4692a3abbc5", override: true},
+       github: "vintrepid/cinder", ref: "1efd02a59b8c487d9226ac7608f48a39f64e63b3", override: true},
       {:ash_authentication,
        git: "https://github.com/vintrepid/ash_authentication.git",
-       ref: "704afa74b8401a3f231f5a20e425201254018cd4",
+       ref: "64441e52fd46c89fcf5de10e958ad458f1026de6",
        override: true},
       {:ash_postgres, ">= 2.15.2"},
       {:ash_cloak, ">= 0.5.0"},
@@ -147,14 +147,14 @@ defmodule AshLotus.MixProject do
       {:ash_archival, ">= 2.0.5"},
       {:ash_money, ">= 0.2.7"},
       {:ash_oban, ">= 0.10.3"},
-      {:ash_admin, "~> 1.4.0"},
+      {:ash_admin, ">= 1.4.0"},
       {:ash_authentication_phoenix, ">= 2.17.4"},
       {:ash_json_api, ">= 1.8.0"},
       {:ash_sql, ">= 0.8.9"},
       {:ex_money_sql, ">= 2.2.0"},
       {:decimal, ">= 3.2.0"},
       {:ex_doc, ">= 0.40.4", only: :dev, runtime: false},
-      {:igniter, ">= 0.8.5", optional: true},
+      {:igniter, ">= 0.8.6"},
       {:spark, ">= 2.7.10"},
       {:mint, ">= 1.10.2"}
     ]
