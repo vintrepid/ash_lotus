@@ -47,7 +47,8 @@ defmodule AshLotus.AshAdminCinderCompatibilityTest do
         page_size: 25,
         pagination_mode: :offset,
         show_filters: false,
-        myself: %Phoenix.LiveComponent.CID{cid: 1}
+        myself: %Phoenix.LiveComponent.CID{cid: 1},
+        has_search: false
       )
 
     assert html =~ "table"
